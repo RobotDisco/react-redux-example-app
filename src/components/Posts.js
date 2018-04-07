@@ -1,3 +1,6 @@
 import React from "react";
 
-export const Posts = () => <div />;
+import { Post } from "./Post";
+
+export const Posts = ({ posts = [] }) =>
+  posts.map(post => <Post key={post.id} {...post} />);
