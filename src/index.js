@@ -1,8 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "redux";
+import logger from "redux-logger";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import Counter from "./components/Counter";
+import counter from "./reducers";
+import registerServiceWorker from "./registerServiceWorker";
+
+const store = createStore(counter, applyMiddleware(logger));
+const rootEl = document.getElementById("root");
+
+const render = () =>
+  ReactDOM.render(
+    <Counter
+      value={store.getState()}
+      onIncrement={() => store.dispatch({ type: "INCREMENT" })}
+      onDecrement={() => store.dispatch({ type: "DECREMENT" })}
+    />,
+    rootEl
+  );
+
+render();
+store.subscribe(render);
 registerServiceWorker();
