@@ -17,8 +17,8 @@ export class Subreddit extends React.Component {
   }
 
   componentDidMount() {
-    // const { match } = this.props;
-    getPosts(/* match.params.name*/ 'toronto').then(posts => {
+    const { match } = this.props;
+    getPosts(match.params.name).then(posts => {
       this.setState({ posts });
     });
   };
