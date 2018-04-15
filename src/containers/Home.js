@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      subreddit: ""
-    };
-  }
+import { connect } from "react-redux";
 
-  handleChange = event => {
-    this.setState({ subreddit: event.target.value});
-  }
+import { changeSubreddit } from "../actions";
+//import { SubredditForm } from "../components/SubredditForm";
 
-  goToSubreddit = () => {
-    this.props.history.push(`/r/${this.state.subreddit}`);
-  }
+const mapStateToProps = state => ({
+  subreddit: state.subreddit
+});
 
-  render() {
-    return (
-      <div>
-        <input onChange={this.handleChange}/>
-        <button onClick={this.goToSubreddit}>GO</button>
-      </div>
-    );
-  }
-}
+const mapDispatchToProps = {
+  changeSubreddit
+};
+
+export const SubredditForm = ({subreddit, changeSubreddit}) => (
+  <div>
+    <input onChange={(event) => changeSubreddit(event.target.value)}/>
+    <button>GO</button>
+  </div>
+);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubredditForm);
