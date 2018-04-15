@@ -5,10 +5,10 @@ const INITIAL_STATE = {
   posts: []
 };
 
-export const subreddit = (state = INITIAL_STATE, action) => {
+export const subreddit = (state = INITIAL_STATE.subreddit, action) => {
   switch (action.type) {
   case "CHANGE_SUBREDDIT":
-    return {...state, subreddit: action.subreddit};
+    return action.subreddit;
   default:
     return state;
   }

@@ -15,9 +15,14 @@ import React from 'react';
  * have access to the state so as long as there was a section for the form I suppose * this is ok although in a complicated web app this seems a bit dodgy but maybe
  * ... ok this is above my understanding so I'll just run with it.
  */
-export const SubredditForm = ({subreddit, changeSubreddit}) => (
+
+
+ /* That onClick seems incredibly dodgy b/c it is a side-effect.
+  * But I'm pretending I don't know about react-router-redux just yet.
+  */
+export const SubredditForm = ({subreddit, changeSubreddit, history}) => (
   <div>
-    <input onChange={(event) => changeSubreddit(event.target.value)}/>
-    <button>GO</button>
+    <input onChange={(event) => changeSubreddit(event.target.value)} />
+    <button onClick={(ignored) => history.push(`/r/${subreddit}`)}>GO</button>
   </div>
 );
