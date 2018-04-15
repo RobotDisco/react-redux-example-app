@@ -15,8 +15,8 @@ const fetchPostsThunk = name =>
         return fetchPosts(name).then(data => dispatch(loadSubreddit(data)));
       };
 
-const mapStateToProps = state => ({
-  subreddit: state.subreddit,
+const mapStateToProps = (state, ownProps) => ({
+  subreddit: ownProps.match.params.name,
   posts: state.posts
 });
 
