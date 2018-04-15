@@ -1,35 +1,27 @@
-import React from 'react';
+import { connect } from "react-redux";
+
+import { fetchSubreddit, loadSubreddit } from "../actions";
 import { Posts } from '../components/Posts';
-import './Subreddit.css';
 
 // fetch data from the (fake) Reddit API
-const getPosts = name =>
+const fetchPosts = name =>
      fetch(`https://www.reddit.com/r/${name}.json`)
       .then(res => res.json())
       .then(rawData => rawData.data.children.map(post => post.data));
 
-export class Subreddit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: []
-    };
-  }
+const fetchPostsThunk = name =>
+      (dispatch) => {
+        dispatch(fetchSubreddit);
+        return fetchPosts(name).then(data => dispatch(loadSubreddit(data)));
+      };
 
-  componentDidMount() {
-    const { match } = this.props;
-    getPosts(match.params.name).then(posts => {
-      this.setState({ posts });
-    });
-  };
+const mapStateToProps = state => ({
+  subreddit: state.subreddit,
+  posts: state.posts
+});
 
-  render() {
-    return (
-      <div>
-        <div className="posts-container">
-          <Posts posts={this.state.posts} />
-        </div>
-      </div>
-    );
-  }
-}
+const mapDispatchToProps = {
+  fetchPostsThunk
+};
+
+export const Subreddit = connect(mapStateToProps, mapDispatchToProps)(Posts);
