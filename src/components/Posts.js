@@ -5,8 +5,8 @@ import './Posts.css';
 
 export class Posts extends React.Component {
   componentDidMount() {
-    const {subreddit, fetchPostsThunk} = this.props;
-    fetchPostsThunk(subreddit);
+    const {match, subreddit, fetchPostsThunk} = this.props;
+    fetchPostsThunk(match.params.name);
   }
 
   render() {
